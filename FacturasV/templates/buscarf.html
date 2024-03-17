@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Facturas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 30px;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        button[type="button"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="button"]:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Buscar Facturas</h1>
+    <form id="search-form" action="/ver_factura" method="post">
+        <label for="numero_factura">Número de Factura:</label>
+        <input type="text" id="numero_factura" name="numero_factura">
+        <button type="button" onclick="buscarFactura()">Buscar</button>
+    </form>
+    
+    <h2>Últimas 10 Facturas:</h2>
+    <ul>
+        {% for factura in ultimas_facturas %}
+            <li><a href="{{ url_for('ver_factura', filename=factura) }}">{{ factura }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        function buscarFactura() {
+            var numeroFactura = document.getElementById('numero_factura').value;
+            var url = '/ver_factura/Factura_Villafon' + numeroFactura + '.pdf';
+            window.location.href = url;
+        }
+
+        // Corregimos la forma de pasar el parámetro filename
+        function verFactura(filename) {
+            var url = "{{ url_for('ver_factura', filename='') }}" + filename;
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
